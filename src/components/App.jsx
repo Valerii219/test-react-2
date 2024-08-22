@@ -1,31 +1,35 @@
-import { Component, } from 'react';
+import { Component } from 'react';
 // import Statistics from './Statistic';
 // import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 // import Section from './Section/Section';
 // import Message from './Notification message/Message';
 import ContactBook from './Form/Form';
-import { nanoid } from 'nanoid'
+import { nanoid } from 'nanoid';
 
 // import Counter from './Counter';
 export class App extends Component {
   state = {
-      contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
     name: '',
-  number:''
+    number: '',
     // good: 0,
     // neutral: 0,
     // bad: 0,
   };
 
-  handleChange = evt =>{
+  handleChange = evt => {
     const { name, value } = evt.currentTarget;
-    this.setState({ [name]:value });
-    
-  }
+    this.setState({ [name]: value });
+  };
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
-    
     const { name, contacts, number } = this.state;
 
     // Check if the contact name is not empty and is valid
@@ -34,26 +38,26 @@ export class App extends Component {
     const newContact = {
       id: nanoid(),
       name: name.trim(),
-      number:number.trim()
+      number: number.trim(),
     };
 
     this.setState({
       contacts: [...contacts, newContact],
       name: '',
-      number: ''
+      number: '',
     });
   };
-      // handleSubmit = evt => {
-    //   evt.preventDefault();
-    //   const form = evt.currentTarget;
-    //   console.dir(form);
-    //   const login = form.elements.login.value;
-    //   const password = form.elements.password.value;
-    //   console.log(login, password);
+  // handleSubmit = evt => {
+  //   evt.preventDefault();
+  //   const form = evt.currentTarget;
+  //   console.dir(form);
+  //   const login = form.elements.login.value;
+  //   const password = form.elements.password.value;
+  //   console.log(login, password);
 
-    //   this.props.onSubmit({ login, password });
-    //   form.reset();
-    // };
+  //   this.props.onSubmit({ login, password });
+  //   form.reset();
+  // };
   // handleIncrement = option => {
   //   this.setState(prevState => ({
   //     [option]: prevState[option] + 1,
@@ -72,15 +76,19 @@ export class App extends Component {
     // const { good, neutral, bad } = this.state;
     // const total = this.countTotalFeedback();
     // const positive = this.countPositiveFeedbackPercentage();
-    const { name, contacts, number } = this.state; 
+    const { name, contacts, number } = this.state;
     const changeValue = this.handleChange;
     const submit = this.handleSubmit;
 
-  
-
     return (
       <>
-        <ContactBook name={name} contacts={contacts} number={number } changeValue={changeValue} submit={submit } />
+        <ContactBook
+          name={name}
+          contacts={contacts}
+          number={number}
+          changeValue={changeValue}
+          submit={submit}
+        />
         {/* <h1>State of components</h1> */}
         {/* <Counter /> */}
         {/* <Section title={'Please leave feadback'}>
@@ -102,7 +110,6 @@ export class App extends Component {
             <Message message={'There is no feedback'} />
           )}
         </Section> */}
-        
       </>
     );
   }

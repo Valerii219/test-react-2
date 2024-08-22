@@ -16,24 +16,26 @@ const ContactBook = ({ name, changeValue, submit, contacts, number }) => {
             required
           />
         </label>
-        <label >Number
+        <label>
+          Number
           <input
-              onChange={changeValue}
-  type="tel"
-  name="number"
-  pattern="\+?\d{1,4}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            onChange={changeValue}
+            type="tel"
+            name="number"
+            pattern="\+?\d{1,4}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             value={number}
-  required
-/>
+            required
+          />
         </label>
         <button type="submit">Add contact</button>
       </form>
-
       <h2>Contacts</h2>
       <ul>
-        {contacts.map((contact) => (
-          <li key={contact.id}>{contact.name}:{ contact.number}</li>
+        {contacts.map(contact => (
+          <li key={contact.id}>
+            {contact.name}:{contact.number}
+          </li>
         ))}
       </ul>
     </>
