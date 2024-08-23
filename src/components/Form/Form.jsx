@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContactBook = ({ name, changeValue, submit, contacts, number }) => {
+const ContactBook = ({ name, changeValue, submit, contacts, number,  }) => {
   return (
     <>
       <form onSubmit={submit}>
@@ -22,7 +22,7 @@ const ContactBook = ({ name, changeValue, submit, contacts, number }) => {
             onChange={changeValue}
             type="tel"
             name="number"
-            pattern="\+?\d{1,4}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             value={number}
             required
@@ -31,6 +31,7 @@ const ContactBook = ({ name, changeValue, submit, contacts, number }) => {
         <button type="submit">Add contact</button>
       </form>
       <h2>Contacts</h2>
+    
       <ul>
         {contacts.map(contact => (
           <li key={contact.id}>

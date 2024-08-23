@@ -5,6 +5,7 @@ import { Component } from 'react';
 // import Message from './Notification message/Message';
 import ContactBook from './Form/Form';
 import { nanoid } from 'nanoid';
+import Filter from './Filter/Filter';
 
 // import Counter from './Counter';
 export class App extends Component {
@@ -30,7 +31,8 @@ export class App extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { name, contacts, number } = this.state;
+
+    const { name, number } = this.state;
 
     // Check if the contact name is not empty and is valid
     if (name.trim() === '') return;
@@ -38,14 +40,17 @@ export class App extends Component {
     const newContact = {
       id: nanoid(),
       name: name.trim(),
-      number: number.trim(),
+      number
     };
 
-    this.setState({
+    this.setState(({ contacts }) => ({
       contacts: [...contacts, newContact],
       name: '',
       number: '',
-    });
+    }));
+  };
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
   };
   // handleSubmit = evt => {
   //   evt.preventDefault();
@@ -76,19 +81,23 @@ export class App extends Component {
     // const { good, neutral, bad } = this.state;
     // const total = this.countTotalFeedback();
     // const positive = this.countPositiveFeedbackPercentage();
-    const { name, contacts, number } = this.state;
+    const { name, number,contacts,  filter } = this.state;
     const changeValue = this.handleChange;
     const submit = this.handleSubmit;
+    const normalizedFilter = filter.toLowerCase();
+    const filterContacts = contacts.filter(contact =>contact.name.toLowerCase().includes(normalizedFilter))
 
     return (
       <>
         <ContactBook
           name={name}
-          contacts={contacts}
+          contacts={filterContacts}
           number={number}
           changeValue={changeValue}
           submit={submit}
         />
+        <Filter changeFilter={this.changeFilter} filter={filter} />
+
         {/* <h1>State of components</h1> */}
         {/* <Counter /> */}
         {/* <Section title={'Please leave feadback'}>
