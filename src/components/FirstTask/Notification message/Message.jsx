@@ -1,4 +1,4 @@
-const Message = ({ message }) => {
-  return <>{message}</>;
-};
-export default Message;
+// const Message = ({ message }) => {
+//   return <>{message}</>;
+// };
+// export default Message;

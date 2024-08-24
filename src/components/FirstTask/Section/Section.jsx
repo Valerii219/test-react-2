@@ -1,10 +1,10 @@
-const Section = ({ title, children }) => {
-  return (
-    <>
-      <h1>{title}</h1>
-      {children}
-    </>
-  );
-};
+// const Section = ({ title, children }) => {
+//   return (
+//     <>
+//       <h1>{title}</h1>
+//       {children}
+//     </>
+//   );
+// };
 
-export default Section;
+// export default Section;
