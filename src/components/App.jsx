@@ -3,54 +3,52 @@ import { Component } from 'react';
 // import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 // import Section from './Section/Section';
 // import Message from './Notification message/Message';
-import ContactBook from './Form/Form';
+
+import Filter from './SecondTask/Filter/Filter';
+import ContactForm from './SecondTask/ContactForm/ContactForm';
+
 import { nanoid } from 'nanoid';
-import Filter from './Filter/Filter';
+import ContactList from './SecondTask/ContactList/ContactsList';
 
 // import Counter from './Counter';
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
-    name: '',
-    number: '',
     // good: 0,
     // neutral: 0,
     // bad: 0,
   };
 
-  handleChange = evt => {
-    const { name, value } = evt.currentTarget;
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = event => {
-    event.preventDefault();
-
-    const { name, number } = this.state;
-
-    // Check if the contact name is not empty and is valid
-    if (name.trim() === '') return;
-
-    const newContact = {
-      id: nanoid(),
-      name: name.trim(),
-      number
-    };
-
-    this.setState(({ contacts }) => ({
-      contacts: [...contacts, newContact],
-      name: '',
-      number: '',
-    }));
-  };
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
+  };
+
+  addContact = ({ name, number }) => {
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+    const theSameName = this.state.contacts.find(
+      contact => contact.name === newContact.name,
+    );
+
+    if (theSameName) {
+      alert(`${theSameName.name}  already has added`);
+      return;
+    }
+
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
+  };
+
+  deleteContact = idContact => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== idContact),
+    }));
   };
   // handleSubmit = evt => {
   //   evt.preventDefault();
@@ -81,22 +79,23 @@ export class App extends Component {
     // const { good, neutral, bad } = this.state;
     // const total = this.countTotalFeedback();
     // const positive = this.countPositiveFeedbackPercentage();
-    const { name, number,contacts,  filter } = this.state;
-    const changeValue = this.handleChange;
-    const submit = this.handleSubmit;
+    const { contacts, filter } = this.state;
+
     const normalizedFilter = filter.toLowerCase();
-    const filterContacts = contacts.filter(contact =>contact.name.toLowerCase().includes(normalizedFilter))
+    const filterContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter),
+    );
 
     return (
       <>
-        <ContactBook
-          name={name}
-          contacts={filterContacts}
-          number={number}
-          changeValue={changeValue}
-          submit={submit}
-        />
-        <Filter changeFilter={this.changeFilter} filter={filter} />
+        <div>
+          <h1>Phonebook</h1>
+          <ContactForm addContact={this.addContact} />
+
+          <h2>Contacts</h2>
+          <Filter changeFilter={this.changeFilter} filter={filter} />
+          <ContactList contacts={filterContacts} onDelete={ this.deleteContact} />
+        </div>
 
         {/* <h1>State of components</h1> */}
         {/* <Counter /> */}
