@@ -13,43 +13,13 @@ import ContactList from './SecondTask/ContactList/ContactsList';
 // import Counter from './Counter';
 export class App extends Component {
   state = {
-    contacts: [],
-    filter: '',
+
     // good: 0,
     // neutral: 0,
     // bad: 0,
   };
 
-  changeFilter = e => {
-    this.setState({ filter: e.currentTarget.value });
-  };
 
-  addContact = ({ name, number }) => {
-    const newContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
-    const theSameName = this.state.contacts.find(
-      contact => contact.name === newContact.name,
-    );
-
-    if (theSameName) {
-      alert(`${theSameName.name}  already has added`);
-      return;
-    }
-
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, newContact],
-    }));
-  };
-
-  deleteContact = idContact => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== idContact),
-    }));
-  };
   // handleSubmit = evt => {
   //   evt.preventDefault();
   //   const form = evt.currentTarget;
@@ -79,26 +49,14 @@ export class App extends Component {
     // const { good, neutral, bad } = this.state;
     // const total = this.countTotalFeedback();
     // const positive = this.countPositiveFeedbackPercentage();
-    const { contacts, filter } = this.state;
 
-    const normalizedFilter = filter.toLowerCase();
-    const filterContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter),
-    );
 
     return (
       <>
-        <div>
-          <h1>Phonebook</h1>
-          <ContactForm addContact={this.addContact} />
+       
 
-          <h2>Contacts</h2>
-          <Filter changeFilter={this.changeFilter} filter={filter} />
-          <ContactList contacts={filterContacts} onDelete={ this.deleteContact} />
-        </div>
-
-        {/* <h1>State of components</h1> */}
-        {/* <Counter /> */}
+        <h1>State of components</h1>
+        <Counter />
         {/* <Section title={'Please leave feadback'}>
           <FeedbackOptions
             options={['good', 'neutral', 'bad']}
