@@ -1,97 +1,108 @@
 import { Component } from 'react';
 import ContactForm from './SecondTask/ContactForm/ContactForm';
-import { nanoid } from 'nanoid';
-import ContactListItem from './SecondTask/ContactList/ContactsList';
+
+import Filter from './SecondTask/Filter/Filter';
+import ContactListItem from './SecondTask/ContactcListItem/ContactsListItem';
 
 export class App extends Component {
   state = {
     contacts: [],
-    name: ''
-  }
+    filter: '',
+  };
 
-  changeName = (e) => {
-    this.setState({ name:e.currentTarget.value })
-  }
-
-  addContact = (contact) => {
-    const newContact = {
-      id: nanoid(),
-      name: contact.name,
-    };
+  addContact = newContact => {
+    const sameContact = this.state.contacts.find(
+      contact => contact.name === newContact.name,
+    );
+    if (sameContact) {
+      alert(
+        `this ${sameContact.name} is already added, please writedown another name`,
+      );
+      return;
+    }
 
     this.setState(prevState => ({
-      [this.state.contacts]:[...prevState.contacts, newContact]
-    }))
-  }
-    
+      contacts: [...prevState.contacts, newContact],
+    }));
+  };
+
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
+  };
+
   render() {
-    const { name, contacts } = this.state;
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    const visibleContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter),
+    );
     return (
       <>
-        <ContactForm name={name} changeName={this.changeName} contacts={contacts}  onSubmit={this.addContact}/>
-        {/* <ContactListItem addContact={this.addContact}/> */}
-
-       
-     </>
+        <h1>Phonebook</h1>
+        <ContactForm addContact={this.addContact} />
+        <h2>Contacts</h2>
+        <Filter filter={filter} changeFilter={this.changeFilter} />
+        <ContactListItem contacts={visibleContacts} />
+      </>
     );
-}
-   
   }
-
-
-
+}
 
 // import Counter from './FirstTask/Counter/Counter';
 // import Section from './FirstTask/Section/Section';
 // import FeedbackOptions from './FirstTask/FeedbackOptions/FeedbackOptions';
 // import Statistics from './FirstTask/Statistic/Statistics';
 // import Message from './FirstTask/Notification message/Message';
-  // state = {
+// state = {
 
-  //   good: 0,
-  //   neutral: 0,
-  //   bad: 0,
-  // };
+//   good: 0,
+//   neutral: 0,
+//   bad: 0,
+// };
 
+// handleIncrement = option => {
+//   this.setState(prevState => ({
+//     [option]: prevState[option] + 1,
+//   }));
+// };
+// countTotalFeedback = () => {
+//   const { good, neutral, bad } = this.state;
+//   return good + neutral + bad;
+// };
+// countPositiveFeedbackPercentage = () => {
+//   const total = this.countTotalFeedback();
+//   return total > 0 ? Math.round((this.state.good / total) * 100) : 0;
+// };
 
+// render() {
+//   const { good, neutral, bad } = this.state;
+//   const total = this.countTotalFeedback();
+//   const positive = this.countPositiveFeedbackPercentage();
 
-  // handleIncrement = option => {
-  //   this.setState(prevState => ({
-  //     [option]: prevState[option] + 1,
-  //   }));
-  // };
-  // countTotalFeedback = () => {
-  //   const { good, neutral, bad } = this.state;
-  //   return good + neutral + bad;
-  // };
-  // countPositiveFeedbackPercentage = () => {
-  //   const total = this.countTotalFeedback();
-  //   return total > 0 ? Math.round((this.state.good / total) * 100) : 0;
-  // };
-
-  // render() {
-  //   const { good, neutral, bad } = this.state;
-  //   const total = this.countTotalFeedback();
-  //   const positive = this.countPositiveFeedbackPercentage();
-
- {/* <h1>State of components</h1> */}
-        {/* <Counter /> */}
-        {/* <Section title={'Please leave feadback'}>
-          <FeedbackOptions
-            options={['good', 'neutral', 'bad']}
-            onLeaveFeedback={this.handleIncrement}
-          />
-        </Section>
-        <Section title="Statistics">
-          {total > 0 ? (
-            <Statistics
-              good={good}
-              neutral={neutral}
-              bad={bad}
-              total={total}
-              positivePercentage={positive}
-            />
-          ) : (
-            <Message message={'There is no feedback'} />
-          )}
-        </Section> */}
+// {
+//   /* <h1>State of components</h1> */
+// }
+// {
+//   /* <Counter /> */
+// }
+// {
+//   /* <Section title={'Please leave feadback'}>
+//           <FeedbackOptions
+//             options={['good', 'neutral', 'bad']}
+//             onLeaveFeedback={this.handleIncrement}
+//           />
+//         </Section>
+//         <Section title="Statistics">
+//           {total > 0 ? (
+//             <Statistics
+//               good={good}
+//               neutral={neutral}
+//               bad={bad}
+//               total={total}
+//               positivePercentage={positive}
+//             />
+//           ) : (
+//             <Message message={'There is no feedback'} />
+//           )}
+//         </Section> */
+// }
