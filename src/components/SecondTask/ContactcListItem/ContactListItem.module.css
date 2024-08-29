@@ -1,0 +1,19 @@
+.btn{
+    min-width: 10px;
+    letter-spacing: 0.04em;
+    color: red;
+    font-size: 16px;
+    line-height: 1.2;
+    background-color: grey;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+padding: 4px;
+    /* transition: backround-color var(--time-cubic), color var(--time-cubic); */
+}
+
+.itemDiv{
+    display: flex;
+    gap: 10px;
+    /* justify-content: center; */
+    align-items: center;
+}
