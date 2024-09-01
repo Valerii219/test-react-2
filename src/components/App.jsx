@@ -6,14 +6,25 @@ import ContactList from './SecondTask/ContactList/ContactsList';
 export class App extends Component {
   state = {
     contacts: [
-      {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-      {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-      {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-      {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+
     ],
     filter: '',
   };
 
+  componentDidMount() {
+    const localContacts = localStorage.getItem('contacts');
+    const parseContacts = JSON.parse(localContacts);
+    if (parseContacts) {
+      this.setState({
+        contacts: parseContacts,
+      });
+    }
+  }
+  componentDidUpdate = (_, prevState) => {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  };
   addContact = newContact => {
     const sameContact = this.state.contacts.find(
       contact => contact.name === newContact.name,

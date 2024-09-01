@@ -7,6 +7,9 @@ class ContactForm extends Component {
     name: '',
     number: '',
   };
+
+
+  
   changeInput = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
@@ -22,8 +25,9 @@ class ContactForm extends Component {
       name,
       number,
     };
-    this.setState(prevState => {
+    this.setState(prevState =>  { 
       return { newContact, name: '', number: '' };
+      
     });
     this.props.addContact(newContact);
   };
